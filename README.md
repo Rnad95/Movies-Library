@@ -7,9 +7,16 @@
 This is a Web Request Response cycle  
 ---
 
-![WRRC](https://i.ibb.co/Q6bN7gD/Screenshot-from-2022-02-01-02-24-35.png)
-  
+![WRRC](https://i.ibb.co/Q6bN7gD/Screenshot-from-2022-02-01-02-24-35.png)  
+
+---  
 ---
+
+## * ***Update WRRC***
+
+![WRRC Db Updated](https://i.ibb.co/LP9wfZ1/Screenshot-from-2022-02-01-21-39-39.png)
+
+---  
 
 # Overview
 
@@ -40,10 +47,23 @@ npm install and run the application in development mode
 >API_KEY= Your_API_KEY  
 >PORT=YOUR_PORT
 
+## * **Update**  
+
+---
+
+- Create a movie database using RDBM (**Postgresql**) and make DATABASE URL like:
+
+>*DATABASE_URL=postgres://username:yourpassword@localhost:5432/DatabaseName*
+
+- Download Pg Library to connect your server with postgresql
+
+- Using Postman to get and retreive the data
+
 ## Project Features
 <!-- What are the features included in you app -->
+---
 The features will include:  
 
 - show a list of movies using its categories
 High rated movies, search box to find the cartian movie by title and show the details which includes a poster image, overview, adult, and vote average.  
-- The application can check the latest movies based on categories. it has recommendations of the movies, show the most popular movie, and suggestions movie. you should be create your own account to login.
+- The application can check the latest movies based on categories. it has recommendations of the movies, show the most popular movie, and suggestions movie. you should be create your own account to login.  
