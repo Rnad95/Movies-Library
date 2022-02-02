@@ -17,21 +17,15 @@ server.use(cors());
 
 server.get('/', handleData);
 server.get('/favorite', handleGet);
-// server.get('/serverError', handleServerError)
+server.get('/serverError', handleServerError)
 server.get('/trending', trendHandle);
 server.get('/search', searchHandler);
+server.get('/primaryInformation', primaryInfoHandler)
+server.get('/translation', translateHandler)
 
 server.use('*', handleNotFound);
 
 
-function Movie(id, title, release_date, poster_path, overview) {
-    this.id = id;
-    this.title = title;
-    this.release_date = release_date;
-    this.poster_path = poster_path;
-    this.overview = overview;
-
-}
 
 //adding a key in env + fixed number
 let numberOfMovies = 2;
@@ -39,17 +33,15 @@ let url = `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.
 // console.log(url)
 
 
+
 function handleData(req, res) {
     let movs = [];
 
     for (let key in data) {
-        let obj = new Movie(data.title, data.poster_path, data.overview);
+        let obj = new Moviee(data.title, data.poster_path, data.overview);
         movs.push(obj)
 
     }
-
-
-
     return res.status(200).json(movs);
 }
 
@@ -63,23 +55,15 @@ function trendHandle(req, res) {
             // console.log(trending.data.results)
             // console.log(result.data.recipes);
             let movs = trending.data.results.map(val => {
-                return new Movie(val.id, val.title, val.release_date, val.poster_path, val.overview);
+                return new Moviee(val.id, val.title, val.release_date, val.poster_path, val.overview);
             });
             res.status(200).json(movs);
         }).catch((err) => {
-
+            handleServerError(error, req, res)
         })
 }
 
 
-function MovieSearch(page, results, total_pages, total_results) {
-    this.page = page;
-    this.results = results;
-    this.total_pages = total_pages;
-    this.total_results = total_results;
-
-
-}
 
 function Moviee(adult, backdrop_path, genre_ids, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count) {
     this.adult = adult
@@ -99,6 +83,42 @@ function Moviee(adult, backdrop_path, genre_ids, id, original_language, original
 
 }
 
+function primaryInfoHandler(req, res) {
+    let movieId = 3
+    let url = `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${process.env.APIKEY}&language=en-US`;
+
+    axios.get(url)
+        .then((priInfo) => {
+
+            let movInfo = new Moviee(priInfo.data.page, priInfo.data.results)
+
+            console.log(movInfo)
+            res.status(200).json(movInfo);
+        }).catch((err) => {
+            handleServerError(err, req, res)
+        })
+
+}
+
+function translateHandler(req, res) {
+    let movieId = 3
+    let url = `https://api.themoviedb.org/3/movie/${movieId}/translations?api_key=${process.env.APIKEY}&language=en-US`;
+
+    axios.get(url)
+        .then((priInfo) => {
+
+            let movInfo = new Moviee(priInfo.data.if, priInfo.data.translations)
+
+            console.log(movInfo)
+            res.status(200).json(movInfo);
+        }).catch((err) => {
+            handleServerError(err, req, res)
+        })
+
+}
+
+
+
 function searchHandler(req, res) {
     let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.APIKEY}&language=en-US&sort_by=created_at.asc&query=Jack+Reacher`;
 
@@ -114,24 +134,25 @@ function searchHandler(req, res) {
                 );
             });
 
-            let movSearch = new MovieSearch(search.data.page, movs, search.data.total_pages, search.data.total_results)
+            let movSearch = new Moviee(search.data.page, movs, search.data.total_pages, search.data.total_results)
 
             console.log(movSearch)
             res.status(200).json(movSearch);
         }).catch((err) => {
-
+            handleServerError(err, req, res)
         })
 }
 
 server.use(handleServerError)
 
 
-function handleServerError(req, res) {
+function handleServerError(error, req, res) {
 
-    return res.status(500).send(`{
-        "status": 500,
-        "responseText": "Sorry, something went wrong"
-        }`)
+    const err = {
+        status: 500,
+        messgae: error
+    }
+    res.status(500).send(err);
 }
 
 function handleNotFound(req, res) {
