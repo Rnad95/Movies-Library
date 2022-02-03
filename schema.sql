@@ -2,13 +2,12 @@ DROP TABLE IF EXISTS favMovies;
 
 CREATE TABLE IF NOT EXISTS favMovies (
 
-    media_type VARCHAR (30),
     adult BOOLEAN,
     backdrop_path VARCHAR(255),
-    genre_ids VARCHAR(255),
+    genre_ids integer[],
     id SERIAL PRIMARY KEY,
-    original_language VARCHAR(10),
-    original_title VARCHAR(255),
+    original_language VARCHAR(30),
+    original_title VARCHAR(30),
     overview VARCHAR(10000),
     popularity INTEGER,
     poster_path VARCHAR(255),
@@ -17,4 +16,6 @@ CREATE TABLE IF NOT EXISTS favMovies (
     video BOOLEAN,
     vote_average INTEGER,
     vote_count INTEGER,
+    comment VARCHAR(255)
+    
 );

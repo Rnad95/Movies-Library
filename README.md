@@ -17,6 +17,15 @@ This is a Web Request Response cycle
 ![WRRC Db Updated](https://i.ibb.co/LP9wfZ1/Screenshot-from-2022-02-01-21-39-39.png)
 
 ---  
+---
+
+## * ***Completing The WRRC***
+
+---
+---
+WRRC Deleting and retrieving
+
+![WRRC Db deleted and retreive](https://i.ibb.co/j4kdsJZ/Delete-And-Retrieve-Data.png)
 
 # Overview
 
@@ -57,7 +66,19 @@ npm install and run the application in development mode
 
 - Download Pg Library to connect your server with postgresql
 
-- Using Postman to get and retreive the data
+- Using Postman to get and retreive the data.
+
+- **Using Postman to delete,update ,retrieve the data**
+
+### update 2
+
+- Adding three request to the Database:  
+
+> 1- **Update** which allows to update the data in database.  
+> 2- **Delete** to delete movie from the favorite page.  
+> 3- **Get Movie** that retrieve the data
+
+---
 
 ## Project Features
 <!-- What are the features included in you app -->
