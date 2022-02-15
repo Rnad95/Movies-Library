@@ -33,12 +33,25 @@ let url = `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.
 // console.log(url)
 
 
+function Moviee(id, vote_count, original_language, title, image, release_date, overview) {
+
+    this.id = id;
+    this.vote_count = vote_count
+    this.original_language = original_language;
+    this.title = title;
+    this.image = image;
+    this.release_date = release_date;
+    this.overview = overview;
+
+
+
+}
 
 function handleData(req, res) {
     let movs = [];
 
     for (let key in data) {
-        let obj = new Moviee(data.title, data.poster_path, data.overview);
+        let obj = new Moviee(val.id, val.title, val.release_date, val.poster_path, val.overview);
         movs.push(obj)
 
     }
@@ -51,11 +64,10 @@ function trendHandle(req, res) {
 
     axios.get(url)
         .then((trending) => {
+            // id, vote_count, original_language, title, image, release_date, overview
 
-            // console.log(trending.data.results)
-            // console.log(result.data.recipes);
             let movs = trending.data.results.map(val => {
-                return new Moviee(val.id, val.title, val.release_date, val.poster_path, val.overview);
+                return new Moviee(val.id, val.vote_count, val.original_language, val.title, val.image, val.release_date, val.overview);
             });
             res.status(200).json(movs);
         }).catch((err) => {
@@ -65,23 +77,6 @@ function trendHandle(req, res) {
 
 
 
-function Moviee(adult, backdrop_path, genre_ids, id, original_language, original_title, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count) {
-    this.adult = adult
-    this.backdrop_path = backdrop_path;
-    this.genre_ids = genre_ids;
-    this.id = id;
-    this.original_language = original_language;
-    this.original_title = original_title;
-    this.overview = overview;
-    this.popularity = popularity;
-    this.poster_path = poster_path;
-    this.release_date = release_date;
-    this.title = title;
-    this.video = video;
-    this.vote_average = vote_average;
-    this.vote_count = vote_count
-
-}
 
 function primaryInfoHandler(req, res) {
     let movieId = 3
@@ -126,10 +121,7 @@ function searchHandler(req, res) {
         .then((search) => {
 
             let movs = search.data.results.map(val => {
-                return new Moviee(val.adult, val.backdrop_path, val.genre_ids,
-                    val.id, val.original_language, val.original_title,
-                    val.overview, val.popularity, val.poster_path, val.release_date,
-                    val.title, val.video, val.vote_average, val.vote_count
+                return new Moviee(val.id, val.vote_count, val.original_language, val.title, val.image, val.release_date, val.overview
 
                 );
             });
